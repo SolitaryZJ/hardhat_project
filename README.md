@@ -1,45 +1,46 @@
-# Sample Hardhat 3 Beta Project (`node:test` and `viem`)
+# NFT Auction Market
+基于以太坊开发的NFT拍卖合约，支持多种ERC20代币以及ETH拍卖。
 
-This project showcases a Hardhat 3 Beta project using the native Node.js test runner (`node:test`) and the `viem` library for Ethereum interactions.
+# 核心设计
+- 多币种拍卖: 支持 ETH 和 ERC20 代币出价
 
-To learn more about the Hardhat 3 Beta, please visit the [Getting Started guide](https://hardhat.org/docs/getting-started#getting-started-with-hardhat-3). To share your feedback, join our [Hardhat 3 Beta](https://hardhat.org/hardhat3-beta-telegram-group) Telegram group or [open an issue](https://github.com/NomicFoundation/hardhat/issues/new) in our GitHub issue tracker.
+- Chainlink 集成: 实时价格转换和美元价值计算
 
-## Project Overview
+- 工厂模式: 类似 Uniswap V2 的拍卖实例管理
 
-This example project includes:
+- 合约升级: UUPS 代理模式支持无损升级
 
-- A simple Hardhat configuration file.
-- Foundry-compatible Solidity unit tests.
-- TypeScript integration tests using [`node:test`](nodejs.org/api/test.html), the new Node.js native test runner, and [`viem`](https://viem.sh/).
-- Examples demonstrating how to connect to different types of networks, including locally simulating OP mainnet.
+# 开发环境
+- Solidity@0.8.10
+- Nodejs@24.11.0
+- Hardhat@3.0.4
+- Viem@2.39.0
 
-## Usage
+# 核心合约
+- NFTAuction.sol    NFT拍卖合约
+- NFTAuctionV2.sol  NFT拍卖V2升级合约
+- NFTAuctionFactory.sol 拍卖工厂
+- TestERC20.sol ERC20代币
+- TestERC721.sol   NFT
 
-### Running Tests
+# Usage
 
-To run all the tests in the project, execute the following command:
+## 安装依赖
+```
+npm install
+```
 
-```shell
+## 编译合约
+```
+npx hardhat compile
+```
+
+## 运行测试
+```
 npx hardhat test
 ```
 
-You can also selectively run the Solidity or `node:test` tests:
-
-```shell
-npx hardhat test solidity
-npx hardhat test nodejs
-```
-
-### Make a deployment to Sepolia
-
-This project includes an example Ignition module to deploy the contract. You can deploy this module to a locally simulated chain or to Sepolia.
-
-To run the deployment to a local chain:
-
-```shell
-npx hardhat ignition deploy ignition/modules/Counter.ts
-```
-
+## 配置
 To run the deployment to Sepolia, you need an account with funds to send the transaction. The provided Hardhat configuration includes a Configuration Variable called `SEPOLIA_PRIVATE_KEY`, which you can use to set the private key of the account you want to use.
 
 You can set the `SEPOLIA_PRIVATE_KEY` variable using the `hardhat-keystore` plugin or by setting it as an environment variable.
@@ -50,8 +51,12 @@ To set the `SEPOLIA_PRIVATE_KEY` config variable using `hardhat-keystore`:
 npx hardhat keystore set SEPOLIA_PRIVATE_KEY
 ```
 
-After setting the variable, you can run the deployment with the Sepolia network:
-
-```shell
-npx hardhat ignition deploy --network sepolia ignition/modules/Counter.ts
+## 部署
 ```
+npx hardhat ignition deploy ignition/modules/TestERC20.ts
+npx hardhat ignition deploy ignition/modules/TestERC721.ts
+npx hardhat ignition deploy ignition/modules/AuctionFactory.ts
+
+-- network sepolia (部署到sepolia网络)
+```
+
